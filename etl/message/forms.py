@@ -42,7 +42,6 @@ def clean_html(html: str) -> str:
 
 
 class ArchiveMessageForm(forms.ModelForm):
-
     # we manually clean sent_date in clean_sent_date() below
     # so just define as a CharField here
     sent_date = forms.CharField(required=False)

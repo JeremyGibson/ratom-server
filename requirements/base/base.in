@@ -1,0 +1,43 @@
+# base.in
+
+# Core Django
+Django>=4.1,<5.0
+dj-database-url
+django-extensions
+django-model-utils
+django-storages
+django-filter
+django-simple-history
+
+# DRF
+djangorestframework
+djangorestframework-simplejwt
+
+# elasticsearch
+django-elasticsearch-dsl
+django-elasticsearch-dsl-drf
+
+# RATOM specific
+libratom
+
+# Postgres
+psycopg2-binary
+
+# Other
+whitenoise
+Pillow
+boto3
+beautifulsoup4
+lxml
+tqdm
+celery[redis]
+msrest
+dealer
+
+# Azure
+requests-aws-sign
+azure-core
+azure-common
+azure-identity
+azure-storage-blob
+natsort

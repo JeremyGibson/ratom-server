@@ -10,7 +10,7 @@ urlpatterns = [
     path("api/v1/", include(ratom_urlpatterns)),
 ]
 
-if settings.DEBUG:
+if settings.USE_DEBUG_TOOLBAR:
     import debug_toolbar
 
     urlpatterns += [
