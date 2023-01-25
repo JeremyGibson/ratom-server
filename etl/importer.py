@@ -1,3 +1,5 @@
+from abc import ABCMeta
+
 import logging
 from typing import List
 from django.conf import settings
@@ -15,20 +17,28 @@ from etl.providers.factory import import_provider_factory, ProviderTypes
 logger = logging.getLogger(__name__)
 
 
-class PstImporter:
-    def __init__(
-        self,
-        import_provider: ImportProvider,
-        account: ratom.Account,
-        spacy_model: Language,
-        is_background: bool = False,
-    ):
-        logger.info(f"PstImporter running on {import_provider.path}")
+class BaseImporter(metaclass=ABCMeta):
+    def __init__(self, import_provider: ImportProvider, account: ratom.Account, spacy_model: Language, is_background: bool = False):
         self.import_provider = import_provider
         self.account = account
         self.spacy_model = spacy_model
         self.is_background = is_background
         self.ratom_file_errors = []
+
+
+class EmlImporter(BaseImporter):
+    """EMLs will typically reside in a folder structure on a filesystem. This is the assumption we will proceed with when
+    building this importer. If the import provider is remote, then assume it is pointing at a zip file with a maildir root.
+    """
+    def __init__(self, **kwargs):
+        super().__init__(**kwargs)
+        logger.info(f"EmlImporter running on {self.import_provider.path}")
+
+
+class PstImporter(BaseImporter):
+    def __init__(self, **kwargs):
+        super().__init__(**kwargs)
+        logger.info(f"PstImporter running on {self.import_provider.path}")
 
     def initializing_stage(self) -> None:
         """Initialization step prior to starting import process."""

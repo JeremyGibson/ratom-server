@@ -6,11 +6,25 @@ from ratom.settings.base import *  # noqa
 
 DEBUG = True
 
+USE_DEBUG_TOOLBAR = os.getenv("USE_DEBUG_TOOLBAR", False)
+
 INSTALLED_APPS += (
-    "debug_toolbar",
     "corsheaders",
 )
 
+MIDDLEWARE += (
+    "corsheaders.middleware.CorsMiddleware",
+)
+
+
+if USE_DEBUG_TOOLBAR:
+    INSTALLED_APPS += (
+        "debug_toolbar",
+    )
+
+    MIDDLEWARE += (
+     "debug_toolbar.middleware.DebugToolbarMiddleware",
+    )
 
 CORS_ORIGIN_ALLOW_ALL = True
 
@@ -26,12 +40,6 @@ CORS_ALLOW_HEADERS = [
     "x-requested-with",
     "x-version-requested",
 ]
-
-
-MIDDLEWARE += (
-    "corsheaders.middleware.CorsMiddleware",
-    "debug_toolbar.middleware.DebugToolbarMiddleware",
-)
 
 INTERNAL_IPS = ("127.0.0.1",)
 
@@ -60,10 +68,10 @@ if "test" in sys.argv:
 if os.getenv("DATABASE_URL"):
     import dj_database_url
 
-    # Update database configuration with $DATABASE_URL.
-    db_from_env = dj_database_url.config(conn_max_age=500)
+    db_from_env = dj_database_url.config(
+        conn_max_age=500,
+        ssl_require=os.getenv("DATABASE_SSL", False),
+    )
     DATABASES["default"].update(db_from_env)
-
-DATABASES["default"]["TEST"] = {"NAME": "test_" + DATABASES["default"]["NAME"]}
 
 RATOM_SAMPLE_DATA_ENABLED = True

@@ -24,8 +24,8 @@ class MessageDocument(Document):
 
     id = fields.IntegerField(attr="id")
     source_id = fields.TextField(fielddata=True)
-    msg_to = fields.StringField()
-    msg_from = fields.StringField()
+    msg_to = fields.TextField()
+    msg_from = fields.TextField()
     subject = fields.TextField(analyzer=html_strip)
     body = fields.TextField(analyzer=html_strip)
     sent_date = fields.DateField()
@@ -39,8 +39,8 @@ class MessageDocument(Document):
             "needs_redaction": fields.BooleanField(),
             "labels": fields.NestedField(
                 properties={
-                    "type": fields.StringField(fields={"raw": fields.KeywordField()}),
-                    "name": fields.StringField(fields={"raw": fields.KeywordField()}),
+                    "type": fields.TextField(fields={"raw": fields.KeywordField()}),
+                    "name": fields.TextField(fields={"raw": fields.KeywordField()}),
                 },
                 multi=True,
             ),
@@ -50,7 +50,7 @@ class MessageDocument(Document):
     account = fields.ObjectField(
         properties={
             "id": fields.IntegerField(),
-            "title": fields.StringField(
+            "title": fields.TextField(
                 fields={
                     "raw": fields.KeywordField(),
                     "suggest": fields.CompletionField(),
@@ -60,7 +60,7 @@ class MessageDocument(Document):
     )
 
     file = fields.ObjectField(
-        properties={"filename": fields.StringField(), "sha256": fields.StringField(),},
+        properties={"filename": fields.TextField(), "sha256": fields.TextField(),},
     )
 
     class Django(object):

@@ -1,5 +1,5 @@
 from django.contrib.auth.models import AbstractUser
-from django.contrib.postgres.fields import JSONField, CICharField, ArrayField
+from django.contrib.postgres.fields import CICharField, ArrayField
 from django.db import models
 
 from simple_history.models import HistoricalRecords
@@ -139,7 +139,7 @@ class File(models.Model):
     )
     date_imported = models.DateTimeField(auto_now_add=True)
     unique_paths = ArrayField(base_field=models.TextField(), default=list)
-    errors = JSONField(null=True, blank=True)
+    errors = models.JSONField(null=True, blank=True)
 
     # Managers
     objects = models.Manager()
@@ -223,8 +223,8 @@ class Message(models.Model):
     subject = models.TextField(blank=True)
     body = models.TextField(blank=True)
     directory = models.TextField(blank=True)
-    headers = JSONField(null=True, blank=True)
-    errors = JSONField(null=True, blank=True)
+    headers = models.JSONField(null=True, blank=True)
+    errors = models.JSONField(null=True, blank=True)
     inserted_on = models.DateTimeField(auto_now_add=True)
 
     class Meta:

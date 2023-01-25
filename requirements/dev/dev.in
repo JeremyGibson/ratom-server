@@ -1,0 +1,18 @@
+# dev requirements
+-c ../base/base.txt
+
+django-debug-toolbar
+ipython
+invoke
+pre-commit
+black
+mypy
+
+# Testing
+coverage
+factory-boy
+pytest
+pytest-django
+pytest-cov
+
+django-cors-headers

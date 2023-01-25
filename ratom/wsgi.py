@@ -11,13 +11,7 @@ import os
 
 from django.core.wsgi import get_wsgi_application
 
-from ratom import load_env
-
-load_env.load_env()
 if "DATABASE_URL" in os.environ:
-    # Dokku or similar
-    os.environ.setdefault("DJANGO_SETTINGS_MODULE", "ratom.settings.deploy")
-else:
     os.environ.setdefault("DJANGO_SETTINGS_MODULE", "ratom.settings")
 
 application = get_wsgi_application()
